@@ -14,17 +14,13 @@ import ChangePassword from "./Changepassword";
 
 const Account = () => {
   const { user, logOut } = UserAuth();
-
   const navigate = useNavigate();
-  // console.log(user && user);
   const [userName, setUserName] = useState("");
   const [proPic, setPropic] = useState("");
   const [isEditing, setIsEditing] = useState(false);
-  const [showChangePassword, setShowChangePassword] = useState(false); // Add state for showing/hiding Change Password component
-
+  const [showChangePassword, setShowChangePassword] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -38,20 +34,14 @@ const Account = () => {
   const handleChangePassword = async (currentPassword, newPassword) => {
     try {
       const authUser = user;
-
-      // Reauthenticate the user with their current password
       const credentials = EmailAuthProvider.credential(
         authUser.email,
         currentPassword
       );
       await reauthenticateWithCredential(authUser, credentials);
-
-      // If reauthentication is successful, update the password
       await updatePassword(authUser, newPassword);
-      setNewPassword("");
-      setShowChangePassword(false); // Close the Change Password component after successful update
+      setShowChangePassword(false);
     } catch (error) {
-      // Handle reauthentication or password update errors
       console.error("Error changing password:", error.code, error.message);
     }
   };
@@ -63,17 +53,10 @@ const Account = () => {
           setIsLoading(true);
           const docRef = doc(db, "users", user.email);
           const unsubscribe = onSnapshot(docRef, (doc) => {
-            const userData = doc.data(); // Store doc.data() in a variable for easier access
-
-            // Set profile data
+            const userData = doc.data();
             setProfileData(userData);
-
-            // Set username based on profileData or user.displayName
             setUserName(userData?.username || user.displayName);
-
-            // Set profile picture based on profileData or user.photoURL
             setPropic(userData?.profilePicUrl || user.photoURL);
-
             setIsLoading(false);
           });
           return unsubscribe;
@@ -93,7 +76,7 @@ const Account = () => {
 
   const handleCloseEditProfile = () => {
     setIsEditing(false);
-    setShowChangePassword(false); // Close Change Password component when closing Edit Profile component
+    setShowChangePassword(false);
   };
 
   return (
@@ -146,7 +129,6 @@ const Account = () => {
         <Savedshows />
       </div>
 
-      {/* Render the Change Password component conditionally */}
       {showChangePassword && (
         <ChangePassword
           onClose={() => setShowChangePassword(false)}

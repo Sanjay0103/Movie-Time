@@ -94,7 +94,7 @@ const Login = () => {
                   >
                     SampleCredentials
                     <p className=" hidden group-hover:flex invisible group-hover:visible absolute top-10 bg-black/50 backdrop-blur-lg rounded-2xl p-5 w-56 transition-all duration-150">
-                      Email&nbsp;&nbsp;:&nbsp;&nbsp;j@mailsample.com <br />
+                      Email&nbsp;&nbsp;:&nbsp;&nbsp;sanjay@gmail.com <br />
                       Password&nbsp;&nbsp;:&nbsp;&nbsp;123456
                     </p>
                   </p>
